@@ -1,5 +1,5 @@
 import json
-from InfoCuris.search_scraping import *
+from InfoCuria.search_scraping import *
 
 def lambda_handler(event, context):
     # TODO implement
