@@ -9,7 +9,16 @@ def search_by_id(id):
 	soup = BeautifulSoup(html_doc, 'html.parser')
 	return soup
 
-def get_case_info(soup):
-	judgement_link = soup.find_all(id="mainForm:aff:0:j_id73:0:dec:0:j_id220:1:j_id258:22")
-	return judgement_link
+def get_printable(doc_url):
+	printable_url = doc_url.replace("document.jsf","document_print.jsf")
+	printable_soup = BeautifulSoup(requests.get(printable_url).text)
+	list(map(lambda tag: tag.decompose(), printable_soup("script")))
+	return printable_soup.get_text(" ")
 
+def get_case_info(soup):
+	judgement_link = soup.find_all(id="mainForm:aff:0:j_id73:0:dec:0:j_id220:0:j_id258:22")
+	opinion_link = soup.find_all(id="mainForm:aff:0:j_id73:0:dec:0:j_id220:1:j_id258:22")
+	return {
+	"judgement":get_printable(judgement_link[0].a["href"]),
+	"opinion":get_printable(opinion_link[0].a["href"])
+	}
