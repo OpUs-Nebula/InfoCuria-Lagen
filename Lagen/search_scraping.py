@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 
-base_url = "http://curia.europa.eu/juris/liste.jsf?"
+base_url = "https://lagen.nu/search/?"
 
 def search_by_id(id):
 	search_string = base_url+"num={}".format(id)
@@ -25,3 +25,24 @@ def extract_case_info(soup):
 
 def case_by_id(id):
 	return extract_case_info(search_by_id(id))
+
+
+"""
+Model notes:
+
+InfoCuris: 7 samples
+- All info exists in single space seperated substring
+
+NJA: 7 samples
+- ID-String ends after tf
+
+JO: 20 samples
+- Seperate out dnr and search for "JO dnr"
+
+KamR: 17 samples
+- String after målnr only necessary //Uniform
+
+HFD: 22 samples
+- rfd as binding string(search fomat: HFD YYYY:REF) //Not uniformly. Other formats exist.
+
+"""
