@@ -23,5 +23,6 @@ def extract_case_info(soup):
 	"opinion":get_printable(opinion_link[0].a["href"])
 	}
 
-def case_by_id(id):
-	return extract_case_info(search_by_id(id))
+def case_by_id(title):
+	case_id = [ word for word in title.split() if word.startswith('C-')]
+	return extract_case_info(search_by_id(case_id[0]))

@@ -20,11 +20,19 @@ def extract_case_info(soup):
 	opinion_link = soup.find_all(id="mainForm:aff:0:j_id73:0:dec:0:j_id220:1:j_id258:22")
 	return {
 	"judgement":get_printable(judgement_link[0].a["href"]),
-	"opinion":get_printable(opinion_link[0].a["href"])
 	}
 
-def case_by_id(id):
-	return extract_case_info(search_by_id(id))
+def case_by_id(title):
+	search_id = ""
+	
+	if "JO" in title:
+		case_info = title.split("(")[0]
+		dnr = case_info.split("dnr")[-1]
+		search_id = "JO dnr "+dnr.strip()
+
+	return search_id
+
+	#return extract_case_info(search_by_id(id))
 
 
 """
