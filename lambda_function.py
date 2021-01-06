@@ -10,9 +10,10 @@ def case_by_source_type(title):
 
 def lambda_handler(event, context):
     # TODO implement
+    case_title = event["body"].strip()
     return {
         'statusCode': 200,
-        'body': json.dumps('Hello from Lambda!')
+        'body': case_by_source_type(case_title)
     }
 
 if __name__ == "__main__":

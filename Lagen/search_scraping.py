@@ -1,41 +1,45 @@
 from bs4 import BeautifulSoup
 import requests
 
-base_url = "https://lagen.nu/search/?"
+base_url = "https://lagen.nu/"
 
 def search_by_id(id):
-	search_string = base_url+"num={}".format(id)
-	html_doc = requests.get(search_string).text
-	soup = BeautifulSoup(html_doc, 'html.parser')
-	return soup
-
-def get_printable(doc_url):
-	printable_url = doc_url.replace("document.jsf","document_print.jsf")
-	printable_soup = BeautifulSoup(requests.get(printable_url).text)
-	list(map(lambda tag: tag.decompose(), printable_soup("script")))
-	return printable_soup.get_text(" ")
+	results = ""
+	if "JO" in id:
+		dnr = id.split("dnr")[-1].strip()
+		url = base_url+"avg/jo/{}".format(dnr)
+		html_doc = requests.get(url).text
+		results = BeautifulSoup(html_doc, 'html.parser')
+	return results
 
 def extract_case_info(soup):
-	judgement_link = soup.find_all(id="mainForm:aff:0:j_id73:0:dec:0:j_id220:0:j_id258:22")
-	opinion_link = soup.find_all(id="mainForm:aff:0:j_id73:0:dec:0:j_id220:1:j_id258:22")
 	return {
-	"judgement":get_printable(judgement_link[0].a["href"]),
+	"judgement":soup.get_text(),
+	"opinion":""
 	}
 
 def case_by_id(title):
 	search_id = ""
-	
+
 	if "JO" in title:
 		case_info = title.split("(")[0]
 		dnr = case_info.split("dnr")[-1]
 		search_id = "JO dnr "+dnr.strip()
 
-	return search_id
+	return extract_case_info(search_by_id(search_id))
 
 	#return extract_case_info(search_by_id(id))
 
 
+
+
 """
+ToDo:
+- JO(avg) and NJA(dom) base url construction(no need for search)
+- Hook into API in R
+- Set up ROGUE API
+- 
+
 Model notes:
 
 InfoCuris: 7 samples
