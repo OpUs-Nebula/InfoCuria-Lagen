@@ -24,5 +24,6 @@ def extract_case_info(soup):
 	}
 
 def case_by_id(title):
+	print(title)
 	case_id = [ word for word in title.split() if word.startswith('C-')]
 	return extract_case_info(search_by_id(case_id[0]))
