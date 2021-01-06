@@ -3,7 +3,7 @@ import InfoCuria.search_scraping as IC
 import Lagen.search_scraping as LG
 
 def case_by_source_type(title):
-	if True in list(map(["JO"],lambda court: court in title)):
+	if True in list(map(lambda court: court in title),["JO"]):
 		return LG.case_by_id(title)
 	else:
 		return IC.case_by_id(title)
