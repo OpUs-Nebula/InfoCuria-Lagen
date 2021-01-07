@@ -35,8 +35,7 @@ def case_by_id(title):
 
 """
 ToDo:
-- JO(avg) and NJA(dom) base url construction(no need for search)
-- Hook into API in R
+- Fix case of two C- cases(Förenade målen C-509/09 och C-161/10 (eDate advertising))
 - Set up ROGUE API
 - 
 

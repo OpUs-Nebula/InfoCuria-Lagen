@@ -16,7 +16,7 @@ def get_printable(doc_url):
 	return printable_soup.get_text(" ")
 
 def extract_case_info(soup):
-	judgement_link = soup.find_all(id="mainForm:aff:0:j_id73:0:dec:0:j_id220:0:j_id258:22")
+	judgement_link = soup.find_all(id="mainForm:aff:0:j_id73:0:dec:0:j_id220:0:j_id258:22") ##Sometimes not available in 22 languages. Last always seems to be swedish however; Search on that might be better. 
 	opinion_link = soup.find_all(id="mainForm:aff:0:j_id73:0:dec:0:j_id220:1:j_id258:22")
 	return {
 	"judgement":get_printable(judgement_link[0].a["href"]),
@@ -26,4 +26,5 @@ def extract_case_info(soup):
 def case_by_id(title):
 	print(title)
 	case_id = [ word for word in title.split() if word.startswith('C-')]
+	print(case_id)
 	return extract_case_info(search_by_id(case_id[0]))
